@@ -1,5 +1,5 @@
 describe('GET /products/search', () => {
-  it('deve buscar produtos com o nome "hp"', () => {
+  it('deve buscar produtos com o nome "hp" e validar se está vim o nome buscado corretamente', () => {
     cy.request({
       url: '/catalog/api/v1/products/search',
       method: 'GET',
@@ -10,42 +10,56 @@ describe('GET /products/search', () => {
         'Content-Type': 'application/json'
       }
     }).then((response) => {
-      cy.log(JSON.stringify(response.body)); 
-      expect(response.status).to.eql(200);  
-      expect(response.body).to.be.an('array');  
-      expect(response.body.length).to.be.greaterThan(0);  
+      cy.log(JSON.stringify(response.body));
+      expect(response.status).to.eql(200);
+
+      expect(response.body).to.be.an('array');
+
+      response.body.forEach((category) => {
+        expect(category).to.have.property('products');
+        expect(category.products).to.be.an('array');
+
+        category.products.forEach((product) => {
+          expect(product).to.have.property('productName');
+          expect(product.productName).to.be.a('string');
+
+          expect(product.productName.toLowerCase()).to.contain('hp');
+        });
+      });
     });
+
   });
 });
 
 describe("POST /accountrest/api/v1/register", () => {
   it("Deve cadastrar um usuário novo", () => {
     const randomString = Cypress._.random(0, 1e6);
-    const email = `user${randomString}@test.com`;  
-    const loginName = `user${randomString}`;
+    const firstName = `Alice${randomString}`;
+    const email = `${firstName}@test.com`;
+    const loginName = `login${randomString}`;
 
     cy.log(`Generated Email: ${email}`);
     cy.log(`Generated LoginName: ${loginName}`);
 
     cy.request({
       method: 'POST',
-      url: '/accountservice/accountrest/api/v1/register',  
+      url: '/accountservice/accountrest/api/v1/register',
       failOnStatusCode: false,
       body: {
-        accountType: "USER",
-        address: "123 Elm Street, Apt 4B",
-        allowOffersPromotion: true,
-        aobUser: false,
-        cityName: "Sydney",
-        country: "AUSTRALIA_AU",
-        email: email,
-        firstName: "Jane100",
-        lastName: "Doe100",
-        loginName: loginName,
-        password: "securePa$$w0rd",
-        phoneNumber: "+61 2 9876 5432",
-        stateProvince: "NSW",
-        zipcode: "2000"
+        "accountType": "USER",
+        "address": "789 Maple Drive",
+        "allowOffersPromotion": true,
+        "aobUser": true,
+        "cityName": "Brisbane",
+        "country": "AUSTRALIA_AU",
+        "email": email,
+        "firstName": firstName,
+        "lastName": "Jones",
+        "loginName": loginName,
+        "password": "Alice2024$",
+        "phoneNumber": "+61 7 1234 5678",
+        "stateProvince": "QLD",
+        "zipcode": "4000"
       }
     }).then((response) => {
       cy.log(`Status: ${response.status}`);
@@ -66,4 +80,37 @@ describe("POST /accountrest/api/v1/register", () => {
       }
     });
   });
+});
+
+describe('Login e Upload de Imagem do Produto', () => {
+  it('Login', () => {
+    let authToken;
+    let userId;
+
+      const email = "alice1.jones@example.com";
+      const loginPassword = "Alice2024$";
+      const loginUser = "alicejones";
+
+      cy.request({
+        method: 'POST',
+        url: 'https://www.advantageonlineshopping.com/accountservice/accountrest/api/v1/login',
+        failOnStatusCode: false,
+        body: {
+          "email": email,
+          "loginPassword": loginPassword,
+          "loginUser": loginUser
+        }
+      }).then((response) => {
+        cy.log(`Status: ${response.status}`);
+        cy.log(`Response Body: ${JSON.stringify(response.body)}`);
+
+        expect(response.status).to.eql(200);
+        expect(response.body.statusMessage.success).to.be.true;
+        expect(response.body.statusMessage.userId).to.be.a('number');
+        expect(response.body.statusMessage.token).to.be.a('string').and.not.be.empty;
+
+        authToken = response.body.statusMessage.token;
+        userId = response.body.statusMessage.userId;
+      });
+    });
 });
