@@ -26,9 +26,9 @@ Siga os passos abaixo para configurar o ambiente de testes:
 
 Instale as dependências do projeto, incluindo o Cypress, que estão listadas no package.json do projeto. 
 
-npm install
+npm init
 ou
-yarn install
+yarn init
 
 
 
