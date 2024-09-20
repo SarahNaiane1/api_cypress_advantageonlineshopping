@@ -34,7 +34,7 @@ describe('GET /products/search', () => {
 describe("POST /accountrest/api/v1/register", () => {
   it("Deve cadastrar um usuário novo", () => {
     const randomString = Cypress._.random(0, 1e6);
-    const firstName = `Alice${randomString}`;
+    const firstName = `${randomString}`;
     const email = `${firstName}@test.com`;
     const loginName = `login${randomString}`;
 
@@ -144,7 +144,7 @@ describe('Login e Upload de Imagem do Produto', () => {
     });
   
     it('Deve fazer o upload da imagem do produto com sucesso', function() {
-      const filePath = 'cypress/fixtures/user1.png'; 
+      const filePath = 'cypress/fixtures/user.png'; 
       const productId = 737250001;
       const source = 'color';
       const color = "white"
@@ -161,7 +161,7 @@ describe('Login e Upload de Imagem do Produto', () => {
             file: {
               value: fileContent,
               options: {
-                filename: 'user1.png',
+                filename: 'user.png',
                 contentType: 'image/png'
               }
             }
