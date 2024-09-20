@@ -1,9 +1,10 @@
-# Projeto de Testes Automatizados para Advantage Online Shopping
+# Projeto de Testes Automatizados de API para Advantage Online Shopping
 
-Este projeto contém testes automatizados  de API para o site [Advantage Online Shopping](https://advantageonlineshopping.com/#/), utilizando o framework **Cypress** 
+Este projeto contém testes automatizados de api para o site [Advantage Online Shopping](https://advantageonlineshopping.com/#/), utilizando o framework **Cypress** com **Cucumber** para escrever cenários de testes em BDD (Behavior-Driven Development).
 
 ## Tecnologias
 
+- **Cucumber**: Para a escrita dos cenários de teste seguindo a abordagem BDD.
 - **Cypress**: Framework para testes de ponta a ponta (E2E) e automação de testes.
 
 ## Requisitos
@@ -20,18 +21,31 @@ Siga os passos abaixo para configurar o ambiente de testes:
 1. **Clone o repositório:**
 
    ```bash
-   git clone https://github.com/SarahNaiane1/api_cypress_advantageonlineshopping
+   git clone https://github.com/seu-usuario/cypress-cucumber-project.git~
 
-2. **Dependencias:**
+2.**Instale as dependências do projeto:**
 
-Instale as dependências do projeto, incluindo o Cypress, que estão listadas no package.json do projeto. 
+   Entre no diretório do projeto:
 
-npm init
-ou
-yarn init
+   ```bash
+      cd cypress-cucumber-project~
+```
+3.**Instale as dependências utilizando npm ou yarn::**
+Com NPM: 
+
+```bash
+  yarn install
+```
 
 
+Com yarn: 
 
+```bash
+  yarn install
+```
 
-
+4. Executando os Testes
+```bash
+npx cypress open
+```
 
