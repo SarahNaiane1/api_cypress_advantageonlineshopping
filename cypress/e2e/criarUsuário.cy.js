@@ -3,7 +3,10 @@ describe("POST /accountrest/api/v1/register", () => {
         const randomString = Cypress._.random(0, 1e6);
         const email = `${randomString}@test.com`;
         const loginName = `login${randomString}`;
-
+        
+        cy.log(`Email: ${email}`);
+        cy.log(`Login Name: ${loginName}`);
+   
         cy.request({
             method: 'POST',
             url: '/accountservice/accountrest/api/v1/register',
@@ -20,6 +23,7 @@ describe("POST /accountrest/api/v1/register", () => {
                 "stateProvince": "QLD",
                 "zipcode": "4000"
             }
+            
         }).then((response) => {
             if (response.status === 200) {
                 expect(response.body.response.success).to.be.true;

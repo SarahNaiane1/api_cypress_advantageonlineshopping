@@ -3,13 +3,13 @@ describe('Login e Upload de Imagem do Produto', () => {
     let userId;
 
     before(() => {
-        const email = "alice1.jones@example.com";
+        const email = "934149@test.com";
         const loginPassword = "Alice2024$";
-        const loginUser = "alicejones";
+        const loginUser = "login934149";
 
         cy.request({
             method: 'POST',
-            url: 'https://www.advantageonlineshopping.com/accountservice/accountrest/api/v1/login',
+            url: '/accountservice/accountrest/api/v1/login',
             failOnStatusCode: false,
             body: {
                 "email": email,
@@ -38,7 +38,7 @@ describe('Login e Upload de Imagem do Produto', () => {
         cy.readFile(filePath, 'base64').then((fileContent) => {
             cy.request({
                 method: 'POST',
-                url: 'https://www.advantageonlineshopping.com/catalog/api/v1/product/image/{userId}/{source}/{color}',
+                url: '/catalog/api/v1/product/image/{userId}/{source}/{color}',
                 headers: {
                     'Authorization': `Bearer ${authToken}`,
                     'Content-Type': 'multipart/form-data'
